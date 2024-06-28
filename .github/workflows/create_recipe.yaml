@@ -73,6 +73,10 @@ jobs:
 
       - name: Commit changes
         run: |
+          echo "========="
           ls recipes/$USER_ID
+          echo "========="
           cat recipes/$USER_ID/index.list
+          echo "========="
           cat users/$USER_ID/name
+          echo "========="
