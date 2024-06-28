@@ -1,0 +1,44 @@
+name: Create Recipe
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Recipe name'
+        required: true
+        type: string
+      description:
+        description: 'Recipe description'
+        required: true
+        type: string
+      steps:
+        description: 'Number of steps'
+        required: true
+        type: string
+      username:
+        description: 'Username'
+        required: true
+        type: string
+      user_secret:
+        description: 'User secret'
+        required: true
+        type: string
+
+env:
+  RECIPE_NAME: ${{ github.event.inputs.name }}
+  RECIPE_DESCRIPTION: ${{ github.event.inputs.description }}
+  RECIPE_STEPS: ${{ github.event.inputs.steps }}
+
+jobs:
+  create-recipe:
+    name: Create Recipe
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Echo inputs
+        run: |
+          echo "Recipe name: $RECIPE_NAME"
+          echo "Recipe description: $RECIPE_DESCRIPTION"
+          echo "Number of steps: $RECIPE_STEPS"
+          echo "Username: $USERNAME"
+          echo "User secret: $USER_SECRET"
