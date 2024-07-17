@@ -48,16 +48,59 @@
   <section id="recipeListScreen" class="page is-hidden">
     <br>
     <div class="container is-max-desktop">
-
       <div class="container is-fluid">
-        <h3 class="is-size-4">
-          Your Recipes
-        </h3>
+        <div class="fixed-grid">
+          <div class="grid">
+            <h3 class="is-size-4">
+              Your Recipes
+            </h3>
+            <div class="is-flex is-justify-content-end">
+              <button class="button is-success" id="createRecipeBtn">➕</button>
+            </div>
+          </div>
+        </div>
 
         <div id="recipeList">
 
         </div>
       </div>
+  </section>
+
+  <section id="createRecipeScreen" class="page is-hidden">
+    <br>
+    <div class="container is-max-desktop">
+      <div class="container is-fluid">
+
+        <div class="field">
+          <label class="label">Recipe Name</label>
+          <div class="control">
+            <input class="input" id="recipeName" type="text" placeholder="Fried Eggs">
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Description</label>
+          <div class="control">
+            <input class="input" id="recipeDescription" type="text" placeholder="As easy as 1,2,3">
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Description</label>
+          <div class="control">
+            <textarea
+              class="textarea"
+              id="recipeContent"
+              placeholder="Write ingredients and steps here in markdown"
+              rows="10"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="is-flex is-justify-content-space-between">
+          <button class="button is-danger" id="cancelRecipeBtn">Cancel</button>
+          <button class="button is-primary" id="submitRecipeBtn">Create Recipe</button>
+        </div>
   </section>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jshashes/1.0.8/hashes.min.js" integrity="sha512-1HyPmPHvi5wFUctYkBhwOYgXmMdbPrDaXKBrbGRI3o1CQkTKazG/RKqR8QwVIjTDOQ3uAOPOFkEbzi99Td6yiQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
