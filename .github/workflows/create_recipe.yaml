@@ -28,7 +28,6 @@ env:
   RECIPE_DESCRIPTION: ${{ github.event.inputs.description }}
   RECIPE_STEPS: ${{ github.event.inputs.steps }}
   USERNAME: ${{ github.event.inputs.username }}
-  USER_SECRET: ${{ github.event.inputs.user_secret }}
 
 jobs:
   create-recipe:
@@ -46,14 +45,13 @@ jobs:
 
       - name: Create a unique string
         run: |
-          USER_ID=$(echo -n "$USERNAME$USER_SECRET" | md5sum | cut -d' ' -f1)
+          USER_ID=$(echo -n "$USERNAME${{ github.event.inputs.user_secret }}" | md5sum | cut -d' ' -f1)
           echo "Secret: $USER_ID"
           echo "USER_ID=$USER_ID" >> $GITHUB_ENV
 
       - name: Register User
         run: |
           URL_SAFE_USERNAME=$(echo "$USERNAME" | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]_\-\.' | tr -s '_' | sed 's/ /_/g')
-          echo "$USER_ID" > $URL_SAFE_USERNAME
           mkdir -p users/$USER_ID
           echo "$URL_SAFE_USERNAME" > users/$USER_ID/name
 
@@ -72,11 +70,10 @@ jobs:
           ls recipes/$USER_ID | sed 's/\.md$//' | tr '\n' ' ' > recipes/$USER_ID/index.list
 
       - name: Commit changes
+        continue-on-error: true
         run: |
-          echo "========="
-          ls recipes/$USER_ID
-          echo "========="
-          cat recipes/$USER_ID/index.list
-          echo "========="
-          cat users/$USER_ID/name
-          echo "========="
+          git config --global user.name 'The Octocat'
+          git config --global user.email 'octocat@github.com'
+          git add .
+          git commit -m "Add $RECIPE_NAME for $USERNAME"
+          git push
