@@ -29,6 +29,9 @@ env:
   RECIPE_STEPS: ${{ github.event.inputs.steps }}
   USERNAME: ${{ github.event.inputs.username }}
 
+permissions:
+  contents: write
+
 jobs:
   create-recipe:
     name: Create Recipe
@@ -36,6 +39,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: Echo inputs
         run: |
           echo "Recipe name: $RECIPE_NAME"
