@@ -14,12 +14,15 @@ function goto(pageName) {
   document.getElementById(pageName).classList.remove('is-hidden');
 }
 async function getRecipes(userId) {
-  const response = await fetch(`https://raw.githubusercontent.com/fizal619/recipe-book/main/recipes/${userId}/index.list`);
+  const response = await fetch(
+    `https://raw.githubusercontent.com/fizal619/recipe-book/main/recipes/${userId}/index.list`,
+    {cache: "no-store"}
+  );
   const data = await response.text();
   if (response.status === 404) {
     return [];
   }
-  return data.split("\n");
+  return data.split("\n").filter(x => x !== "");
 }
 
 async function render() {
