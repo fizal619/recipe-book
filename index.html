@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html data-theme="light" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍜</text></svg>">
+
+  <title>Recipe Book</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+  <section class="hero is-danger">
+    <div class="hero-body">
+      <p class="title">Recipe Book</p>
+      <p class="subtitle">Shared recipes between friends 🔒</p>
+    </div>
+  </section>
+
+  <section id="createUserScreen" class="page is-hidden">
+    <br>
+    <div class="container is-max-desktop">
+      <div class="container is-fluid">
+        <h1 class="title">Hi!</h1>
+        <h2 class="subtitle">
+          Please enter a username and a secret phrase to get started.
+        </h2>
+
+        <div class="field">
+          <label class="label">Username</label>
+          <div class="control">
+            <input class="input" id="username" type="text" placeholder="fizal619">
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Secret Phrase 🤫</label>
+          <div class="control">
+            <input class="input" id="userSecret" type="text" placeholder="Jump over the moon 123">
+          </div>
+        </div>
+
+        <button class="button is-primary" id="createUserBtn">Let's Go!</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="recipeListScreen" class="page is-hidden">
+    <br>
+    <div class="container is-max-desktop">
+
+      <div class="container is-fluid">
+        <h3 class="is-size-4">
+          Your Recipes
+        </h3>
+
+        <div id="recipeList">
+
+        </div>
+      </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jshashes/1.0.8/hashes.min.js" integrity="sha512-1HyPmPHvi5wFUctYkBhwOYgXmMdbPrDaXKBrbGRI3o1CQkTKazG/RKqR8QwVIjTDOQ3uAOPOFkEbzi99Td6yiQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="main.js"></script>
+</body>
+</html>
