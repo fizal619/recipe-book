@@ -28,7 +28,7 @@ env:
   RECIPE_NAME: ${{ github.event.inputs.name }}
   RECIPE_DESCRIPTION: ${{ github.event.inputs.description }}
   RECIPE_STEPS: ${{ github.event.inputs.steps }}
-  USERNAME: ${{ github.event.inputs.username }}
+  USER_NAME: ${{ github.event.inputs.username }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.inputs.name }}
@@ -50,17 +50,17 @@ jobs:
           echo "Recipe name: $RECIPE_NAME"
           echo "Recipe description: $RECIPE_DESCRIPTION"
           echo "Number of steps: $RECIPE_STEPS"
-          echo "Username: $USERNAME"
+          echo "Username: $USER_NAME"
 
       - name: Create a unique string
         run: |
-          USER_ID=$(echo -n "$USERNAME${{ github.event.inputs.user_secret }}" | sha256sum | cut -d' ' -f1)
+          USER_ID=$(echo -n "$USER_NAME ${{ github.event.inputs.user_secret }}" | sha256sum | cut -d' ' -f1)
           echo "Secret: $USER_ID"
           echo "USER_ID=$USER_ID" >> $GITHUB_ENV
 
       - name: Register User
         run: |
-          URL_SAFE_USERNAME=$(echo "$USERNAME" | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]_\-\.' | tr -s '_' | sed 's/ /_/g')
+          URL_SAFE_USERNAME=$(echo "$USER_NAME" | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]_\-\.' | tr -s '_' | sed 's/ /_/g')
           mkdir -p users/$USER_ID
           echo "$URL_SAFE_USERNAME" > users/$USER_ID/name
 
