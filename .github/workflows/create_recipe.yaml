@@ -76,7 +76,7 @@ jobs:
           " > recipes/$USER_ID/$URL_SAFE_RECIPE_NAME.md
 
           # list all markdown files in the recipes directory
-          ls recipes/$USER_ID | sed 's/\.md$//' | tr '\n' ' ' > recipes/$USER_ID/index.list
+          ls -I "*.list" | sort  > recipes/$USER_ID/index.list
 
       - name: Commit changes
         continue-on-error: true

@@ -12,11 +12,13 @@ function goto(pageName) {
 async function getRecipes(userId) {
   const response = await fetch(`https://raw.githubusercontent.com/fizal619/recipe-book/main/recipes/${userId}/index.list`);
   const data = await response.text();
-  return data.split(" ").filter(x => x !== "index.list" && x !== "");
+  if (response.status === 404) {
+    return [];
+  }
+  return data.split("\n");
 }
 
 async function render() {
-  const createUserScrreen = document.getElementById('createUserScreen');
   const username = localStorage.getItem('username');
   const userSecret = localStorage.getItem('userSecret');
   const recipeList = document.getElementById('recipeList');
@@ -31,7 +33,11 @@ async function render() {
   if (userId) {
     const userRecipes = await getRecipes(userId);
     console.log(userRecipes);
-    recipeList.innerHTML = userRecipes.map(x => `<div class="box"><p>${x}</p></div>`).join("");
+    recipeList.innerHTML = userRecipes.map(x => `
+      <div class="box">
+        <p>${x}</p>
+      </div>
+    `).join("");
   }
   goto(currentScreen);
 }
