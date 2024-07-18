@@ -28,11 +28,10 @@ jobs:
     env:
       FILE_NAME: ${{ github.event.inputs.filename }}
       USER_NAME: ${{ github.event.inputs.username }}
-      USER_SECRET: ${{ github.event.inputs.user_secret }}
     name: Create Recipe
     runs-on: ubuntu-latest
     steps:
-      - run: echo "::add-mask::$USER_SECRET"
+      - run: echo "::add-mask::${{ github.event.inputs.user_secret }}"
 
       - name: Checkout
         uses: actions/checkout@v2
@@ -40,7 +39,6 @@ jobs:
       - name: Create a unique string
         run: |
           USER_ID=$(echo -n "$USER_NAME ${{ github.event.inputs.user_secret }}" | sha256sum | cut -d' ' -f1)
-          echo "Secret: $USER_ID"
           echo "USER_ID=$USER_ID" >> $GITHUB_ENV
 
       - name: Delete recipe

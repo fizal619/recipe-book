@@ -15,7 +15,7 @@ function goto(pageName) {
 }
 async function getRecipes(userId) {
   const response = await fetch(
-    `https://raw.githubusercontent.com/fizal619/recipe-book/main/recipes/${userId}/index.list`,
+    `https://raw.githubusercontent.com/fizal619/recipe-book/main/recipes/${userId}/index.list?token=${Date.now()}`,
     {cache: "no-store"}
   );
   const data = await response.text();
@@ -36,12 +36,12 @@ async function render() {
     userId = SHA256.hex(`${username} ${userSecret}`);
     currentScreen = "recipeListScreen";
   }
-  console.log(userId);
+
   if (userId) {
     const userRecipes = await getRecipes(userId);
     console.log(userRecipes);
     recipeList.innerHTML = userRecipes.map(x => `
-      <div class="box">
+      <div onclick="openRecipe('${x}')" class="box is-flex is-justify-content-space-between recipe-item">
         <p>${x}</p>
       </div>
     `).join("");
