@@ -19,7 +19,7 @@ on:
         description: 'Username'
         required: true
         type: string
-      user_secret:
+      WEBHOOK_TOKEN:
         description: 'User secret'
         required: true
         type: string
@@ -40,15 +40,15 @@ jobs:
       RECIPE_DESCRIPTION: ${{ github.event.inputs.description }}
       RECIPE_STEPS: ${{ github.event.inputs.steps }}
       USER_NAME: ${{ github.event.inputs.username }}
+      WEBHOOK_TOKEN: ${{ github.event.inputs.WEBHOOK_TOKEN }}
     steps:
-      - run: echo "::add-mask::${{ github.event.inputs.user_secret }}"
 
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Create a unique string
         run: |
-          USER_ID=$(echo -n "$USER_NAME ${{ github.event.inputs.user_secret }}" | sha256sum | cut -d' ' -f1)
+          USER_ID=$(echo -n "$USER_NAME $WEBHOOK_TOKEN" | sha256sum | cut -d' ' -f1)
           echo "USER_ID=$USER_ID" >> $GITHUB_ENV
 
       - name: Register User
