@@ -1,4 +1,4 @@
-# Egg tortilla
+# Egg Tortilla
 
 Ingredients:
 - 1 Egg
