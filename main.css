@@ -3,3 +3,19 @@
 .recipe-item p {
   line-height: 40px;
 }
+
+#recipeBox {
+  line-height: 2rem;
+}
+
+#recipeBox h1 {
+  font-size: 2rem;
+}
+
+#recipeBox h2 {
+  font-size: 1.5rem;
+}
+
+#recipeBox h3 {
+  font-size: 1.25rem;
+}
