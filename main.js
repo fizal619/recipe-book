@@ -171,6 +171,9 @@ function createRecipe() {
       className: "success",
       position: "center"
     }).showToast();
+    recipeName.value = '';
+    recipeContent.innerHTML = '';
+    goto('recipeListScreen');
   }).catch(x => {
     console.log(x);
     Toastify({
@@ -179,10 +182,6 @@ function createRecipe() {
       position: "center"
     }).showToast();
   });
-  recipeName.value = '';
-  recipeDescription.value = '';
-  recipeContent.value = '';
-  goto('recipeListScreen');
 }
 
 function addFriend() {
