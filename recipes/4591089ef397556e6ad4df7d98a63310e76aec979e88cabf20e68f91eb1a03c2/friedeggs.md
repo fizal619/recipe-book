@@ -1,7 +1,5 @@
 # Fried Eggs
 
-# Fried Eggs
-
 1. Cooking 1 egg? Pull out a small skillet, preferably cast iron. Cooking 2 eggs? Use a medium-to-large skillet and use 2 tablespoons of olive oil.
 2. Crack an egg into a small bowl or ramekin and place it near the stove. Warm your skillet over medium-high heat until it’s hot enough that a drop of water sizzles rapidly on contact.
 3. Reduce the heat to medium and add the olive oil to the pan. Gently tilt the pan around so the olive oil covers the base of the pan. The olive oil should be so warm that it shimmers on the pan (if not, give it a little more time to warm up).
