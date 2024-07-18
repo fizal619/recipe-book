@@ -31,13 +31,15 @@ jobs:
     name: Create Recipe
     runs-on: ubuntu-latest
     steps:
-      - run: echo "::add-mask::${{ github.event.inputs.user_secret }}"
 
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Create a unique string
+        env:
+          USER_SECRET: ${{ github.event.inputs.user_secret }}
         run: |
+          echo "::add-mask::$USER_SECRET"
           USER_ID=$(echo -n "$USER_NAME ${{ github.event.inputs.user_secret }}" | sha256sum | cut -d' ' -f1)
           echo "USER_ID=$USER_ID" >> $GITHUB_ENV
 

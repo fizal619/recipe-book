@@ -78,7 +78,7 @@ function createRecipe() {
         'description': recipeDescription.value,
         'steps': recipeContent.value,
         'username': username,
-        'WEBHOOK_TOKEN': userSecret
+        'user_secret': userSecret
       }
     })
   }).then(x => x.json()).then(x => {
