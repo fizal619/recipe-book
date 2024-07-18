@@ -1,0 +1,59 @@
+name: Delete Recipe
+
+on:
+  workflow_dispatch:
+    inputs:
+      filename:
+        description: 'Recipe name'
+        required: true
+        type: string
+      username:
+        description: 'Username'
+        required: true
+        type: string
+      user_secret:
+        description: 'User secret'
+        required: true
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.inputs.username }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  delete-recipe:
+    env:
+      FILE_NAME: ${{ github.event.inputs.filename }}
+      USER_NAME: ${{ github.event.inputs.username }}
+      USER_SECRET: ${{ github.event.inputs.user_secret }}
+    name: Create Recipe
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "::add-mask::$USER_SECRET"
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Create a unique string
+        run: |
+          USER_ID=$(echo -n "$USER_NAME ${{ github.event.inputs.user_secret }}" | sha256sum | cut -d' ' -f1)
+          echo "Secret: $USER_ID"
+          echo "USER_ID=$USER_ID" >> $GITHUB_ENV
+
+      - name: Delete recipe
+        run: |
+          rm -rf recipes/$USER_ID/$FILE_NAME
+          # list all markdown files in the recipes directory
+          ls -I "*.list" recipes/$USER_ID | sort  > recipes/$USER_ID/index.list
+
+      - name: Commit changes
+        continue-on-error: true
+        run: |
+          git config --global user.name 'The Octocat'
+          git config --global user.email 'octocat@github.com'
+          git add .
+          git commit -m "Add $RECIPE_NAME for $USERNAME"
+          git push
