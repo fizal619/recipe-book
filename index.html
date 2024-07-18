@@ -6,6 +6,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍜</text></svg>">
 
   <title>Recipe Book</title>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
   <link rel="stylesheet" href="main.css">
 </head>
 <body>
@@ -66,6 +67,22 @@
       </div>
   </section>
 
+  <section id="viewRecipeScreen" class="page is-hidden">
+    <br>
+    <div class="container is-max-desktop">
+      <div class="container is-fluid">
+        <div id="recipeBox">
+        </div>
+        <hr>
+        <p>By <span id="recipeUser"></span></p>
+        <br>
+        <div class="is-flex is-justify-content-space-between">
+          <button class="button is-warning cancelRecipeBtn">Back</button>
+          <button class="button is-danger" id="deleteRecipeBtn">Delete</button>
+        </div>
+      </div>
+  </section>
+
   <section id="createRecipeScreen" class="page is-hidden">
     <br>
     <div class="container is-max-desktop">
@@ -75,13 +92,6 @@
           <label class="label">Recipe Name</label>
           <div class="control">
             <input class="input" id="recipeName" type="text" placeholder="Fried Eggs">
-          </div>
-        </div>
-
-        <div class="field">
-          <label class="label">Description</label>
-          <div class="control">
-            <input class="input" id="recipeDescription" type="text" placeholder="As easy as 1,2,3">
           </div>
         </div>
 
@@ -98,12 +108,14 @@
         </div>
 
         <div class="is-flex is-justify-content-space-between">
-          <button class="button is-danger" id="cancelRecipeBtn">Cancel</button>
+          <button class="button is-danger cancelRecipeBtn">Cancel</button>
           <button class="button is-primary" id="submitRecipeBtn">Create Recipe</button>
         </div>
   </section>
 
+  <script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jshashes/1.0.8/hashes.min.js" integrity="sha512-1HyPmPHvi5wFUctYkBhwOYgXmMdbPrDaXKBrbGRI3o1CQkTKazG/RKqR8QwVIjTDOQ3uAOPOFkEbzi99Td6yiQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   <script src="main.js"></script>
 </body>
 </html>
