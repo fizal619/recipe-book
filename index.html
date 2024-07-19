@@ -69,6 +69,7 @@
           <button class="button is-success m-1" id="friendsBtn">Friends</button>
         </div>
       </div>
+    </div>
   </section>
 
   <section id="friendReceipeListScreen" class="page is-hidden">
@@ -100,6 +101,7 @@
           <button class="button is-warning cancelRecipeBtn m-1"">Back</button>
         </div>
       </div>
+    </div>
   </section>
 
   <section id="viewRecipeScreen" class="page is-hidden">
@@ -112,13 +114,17 @@
         <p>By <span id="recipeUser"></span></p>
         <br>
         <div class="is-flex is-justify-content-space-between">
-          <button class="button is-warning cancelRecipeBtn">Home</button>
-          <button class="button is-danger" id="deleteRecipeBtn">Delete</button>
+          <button class="button is-success cancelRecipeBtn">Home</button>
+          <div class="is-flex is-justify-content-space-between">
+            <button class="button is-warning" id="editRecipeNavBtn">Edit</button>
+            <button class="button is-danger ml-2" id="deleteRecipeBtn">Delete</button>
+          </div>
         </div>
         <br>
         <br>
         <br>
       </div>
+    </div>
   </section>
 
   <section id="createRecipeScreen" class="page is-hidden">
@@ -149,6 +155,33 @@
           <button class="button is-danger cancelRecipeBtn">Cancel</button>
           <button class="button is-primary" id="submitRecipeBtn">Create Recipe</button>
         </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="editRecipeScreen" class="page is-hidden">
+    <br>
+    <div class="container is-max-desktop">
+      <div class="container is-fluid">
+        <div class="field">
+          <label class="label">Edit</label>
+          <div class="control">
+            <textarea
+              class="textarea"
+              id="recipeContentEdit"
+              placeholder="Write ingredients and steps here in markdown"
+              rows="10"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="is-flex is-justify-content-space-between">
+          <button class="button is-danger cancelRecipeBtn">Cancel</button>
+          <button class="button is-primary" id="editRecipeBtn">Edit Recipe</button>
+        </div>
+      </div>
+    </div>
   </section>
 
   <script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>

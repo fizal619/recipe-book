@@ -1,0 +1,63 @@
+name: Edit Recipe
+
+on:
+  workflow_dispatch:
+    inputs:
+      filename:
+        description: 'Recipe filename'
+        required: true
+        type: string
+      body:
+        description: 'Content'
+        required: true
+        type: string
+      username:
+        description: 'Username'
+        required: true
+        type: string
+      user_secret:
+        description: 'User secret'
+        required: true
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.inputs.filename }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  create-recipe:
+    name: Create Recipe
+    runs-on: ubuntu-latest
+    env:
+      FILENAME: ${{ github.event.inputs.filename }}
+      BODY: ${{ github.event.inputs.body }}
+      USER_NAME: ${{ github.event.inputs.username }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Create a unique string
+        env:
+          USER_SECRET: ${{ github.event.inputs.user_secret }}
+        run: |
+          echo "::add-mask::$USER_SECRET"
+          USER_ID=$(echo -n "$USER_NAME $USER_SECRET" | sha256sum | cut -d' ' -f1)
+          echo "USER_ID=$USER_ID" >> $GITHUB_ENV
+
+      - name: Edit recipe
+        run: |
+          mkdir -p recipes/$USER_ID
+          echo $BODY > recipes/$USER_ID/$FILENAME
+
+      - name: Commit changes
+        continue-on-error: true
+        run: |
+          git config --global user.name 'The Octocat'
+          git config --global user.email 'octocat@github.com'
+          git add .
+          git commit -m "Add $RECIPE_NAME for $USERNAME"
+          git push

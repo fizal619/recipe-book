@@ -100,8 +100,12 @@ async function viewRecipe(filename, recipeUserId) {
 
   if (recipeUserId === userId) {
     document.getElementById('deleteRecipeBtn').classList.remove('is-hidden');
+    document.getElementById('editRecipeNavBtn').classList.remove('is-hidden');
+    document.getElementById("editRecipeNavBtn").dataset.filename = filename;
+    document.getElementById("editRecipeNavBtn").dataset.recipe = recipe;
   } else {
     document.getElementById('deleteRecipeBtn').classList.add('is-hidden');
+    document.getElementById('editRecipeNavBtn').classList.add('is-hidden');
   }
 
   goto("viewRecipeScreen");
@@ -236,6 +240,58 @@ async function renderFriendListScreen() {
 
 }
 
+async function editRecipeScreen(e) {
+  const filename = e.target.dataset.filename;
+  const recipe = e.target.dataset.recipe;
+
+  document.getElementById('recipeContentEdit').value = recipe;
+  document.getElementById('recipeContentEdit').dataset.filename = filename;
+
+  goto('editRecipeScreen');
+}
+
+async function editRecipe() {
+  const filename = document.getElementById('recipeContentEdit').dataset.filename;
+  const recipe = document.getElementById('recipeContentEdit').value;
+  const username = localStorage.getItem('username');
+  const userSecret = localStorage.getItem('userSecret');
+  const auth = `${prefix}${half}${otherHalf}`;
+  const url = `https://api.github.com/repos/fizal619/recipe-book/actions/workflows/edit_recipe.yaml/dispatches`;
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Authorization': `token ${auth}`,
+      'Accept': 'application/vnd.github.v3+json',
+    },
+    body: JSON.stringify({
+      'ref': 'main',
+      'inputs': {
+        'filename': filename,
+        'body': recipe,
+        'username': username,
+        'user_secret': userSecret
+      }
+    })
+  }).then(x => x.text()).then(x => {
+    console.log(x);
+    Toastify({
+      text: "Recipe will be edited shortly. Refresh to see changes in a minute.",
+      className: "success",
+      position: "center"
+    }).showToast();
+    recipeName.value = '';
+    recipeContent.innerHTML = '';
+    goto('recipeListScreen');
+  }).catch(x => {
+    console.log(x);
+    Toastify({
+      text: "Failed to edit recipe. Please try again later.",
+      className: "danger",
+      position: "center"
+    }).showToast();
+  });
+}
+
 document.getElementById('createUserBtn').addEventListener('click', registerUser);
 document.getElementById('createRecipeBtn').addEventListener('click', () => {
   goto('createRecipeScreen');
@@ -261,6 +317,10 @@ document.getElementById("friendCode").addEventListener("click", () => {
 })
 
 document.getElementById('addFriendButton').addEventListener('click',addFriend);
+
+document.getElementById('editRecipeNavBtn').addEventListener('click', editRecipeScreen);
+
+document.getElementById('editRecipeBtn').addEventListener('click', editRecipe);
 
 render();
 
